@@ -1,5 +1,24 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/7o0xp2fgbhadkgn1?svg=true)](https://ci.appveyor.com/project/neurolabusc/dcm2niix)
 
+```
+#!/bin/bash
+
+# Specify the input and output directories
+input_dir="/code/austin_dataset"
+output_dir="/code/recon"
+
+# Change to the input directory
+cd "$input_dir"
+
+# Iterate over subdirectories and run the dcm2niix command
+for subfolder in */; do
+    subfolder_name="${subfolder%/}"  # Remove trailing slash
+    dcm2niix -z y -f %f -o "$output_dir" "$input_dir/$subfolder_name"
+done
+
+echo "Conversion finished"
+```
+
 ## About
 
 dcm2niix is designed to convert neuroimaging data from the DICOM format to the NIfTI format. This web page hosts the developmental source code - a compiled version for Linux, MacOS, and Windows of the most recent stable release is included with [MRIcroGL](https://www.nitrc.org/projects/mricrogl/). A full manual for this software is available in the form of a [NITRC wiki](http://www.nitrc.org/plugins/mwiki/index.php/dcm2nii:MainPage).
